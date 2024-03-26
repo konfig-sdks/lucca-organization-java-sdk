@@ -1,0 +1,1546 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: developers@lucca.fr
+    name: Lucca
+    url: www.lucca.fr
+  description: |
+    Welcome on the documentation for the Organization Structure API
+  title: Organization structure API
+  version: "1.0"
+  x-konfig-ignore:
+    object-with-no-properties: true
+    potential-incorrect-type: true
+  x-konfig-has-globally-required-security: true
+servers:
+- description: Your production environment (France)
+  url: https://example.ilucca.net
+- description: Your test environment (France)
+  url: https://example.ilucca-test.net
+security:
+- Authorization: []
+tags:
+- name: Axis-sections
+- name: Departments
+paths:
+  /api/v3/axes:
+    get:
+      description: List all Axes satisfying query filters.
+      operationId: Axissections_list
+      parameters:
+      - description: Filter on axes unique identifiers.
+        explode: true
+        in: query
+        name: id
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: Filter on axes active status.
+        explode: true
+        in: query
+        name: isActive
+        required: false
+        schema:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-paths--api-v3-axes-get-parameters-1-schema
+        style: form
+      - description: "{offset},{limit}. Defaults to 0,1000."
+        explode: true
+        in: query
+        name: paging
+        required: true
+        schema:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AxissectionsListResponse'
+          description: OK
+      summary: List Axes
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-axes
+      x-accepts: application/json
+  /api/v3/axisSections:
+    get:
+      description: List all AxisSections satisfying query filters.
+      operationId: Axissections_list
+      parameters:
+      - description: "{offset},{limit}. Defaults to 0,1000."
+        explode: true
+        in: query
+        name: paging
+        required: true
+        schema:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+        style: form
+      - description: Filter on the axis it belongs to.
+        explode: true
+        in: query
+        name: axisId
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: Filter on the owner managing it.
+        explode: true
+        in: query
+        name: ownerId
+        required: false
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: Filter on active status.
+        explode: true
+        in: query
+        name: active
+        required: false
+        schema:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-paths--api-v3-axisSections-get-parameters-3-schema
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Get User Alice Smith:
+                  value:
+                    id: 142
+                    firstName: Alice
+                    lastName: Smith
+                    email: alice.smith@gmail.com
+                    dateOfBirth: 1997-10-31
+                    emailVerified: true
+                    signUpDate: 2019-08-24
+              schema:
+                $ref: '#/components/schemas/AxissectionsList200Response'
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: List AxisSections
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-axisSections
+      x-accepts: application/json
+    post:
+      description: Create a new AxisSection.
+      operationId: Axissections_createNewAxisSection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AxisSection'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AxissectionsCreateNewAxisSectionResponse'
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Create a new AxisSection
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-post--api-v3-axisSections
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v3/axisSections/{axisSectionId}:
+    delete:
+      description: ""
+      operationId: Axissections_deleteById
+      parameters:
+      - explode: false
+        in: path
+        name: axisSectionId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Delete an AxisSection by id
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-delete--api-v3-axisSections-axisSectionId
+      x-accepts: application/json
+    get:
+      description: Retrieve a single AxisSection by its unique identifier.
+      operationId: Axissections_getById
+      parameters:
+      - explode: false
+        in: path
+        name: axisSectionId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AxissectionsGetByIdResponse'
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Get an AxisSection by id
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-axisSections-axisSectionId
+      x-accepts: application/json
+    put:
+      description: Partial or complete update to an existing AxisSection.
+      operationId: Axissections_updateById
+      parameters:
+      - explode: false
+        in: path
+        name: axisSectionId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AxisSection'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AxissectionsUpdateByIdResponse'
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Update an AxisSection by id
+      tags:
+      - Axis-sections
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-put--api-v3-axisSections-axisSectionId
+      x-content-type: application/json
+      x-accepts: application/json
+  /api/v3/departments:
+    get:
+      description: List all Departments satisfying query filters.
+      operationId: Departments_getAll
+      parameters:
+      - explode: true
+        in: query
+        name: headId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: parentId
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "{offset},{limit}. Defaults to 0,1000."
+        explode: true
+        in: query
+        name: paging
+        required: true
+        schema:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAllResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "500":
+          description: Internal Server Error
+      summary: List Departments
+      tags:
+      - Departments
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-departments
+      x-accepts: application/json
+  /api/v3/departments/tree:
+    get:
+      description: "List all departments as a tree.\nRemark: first node is always\
+        \ empty and represents the starting point of the tree as multiple departments\
+        \ might be set to the highest level. "
+      operationId: Departments_listTree
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsListTreeResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "500":
+          description: Internal Server Error
+      summary: List Departements as a tree
+      tags:
+      - Departments
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-departments-tree
+      x-accepts: application/json
+  /api/v3/departments/{departmentId}:
+    get:
+      description: Retrieve a single Department by its unique identifier.
+      operationId: Departments_getById
+      parameters:
+      - explode: false
+        in: path
+        name: departmentId
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetByIdResponse'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DepartmentsGetAll400Response'
+          description: Generique error message response
+          x-do-not-generate: true
+      summary: Get Departement by id
+      tags:
+      - Departments
+      x-konfig-operation-can-have-single-parameter: true
+      x-konfig-single-parameter-schema: konfig-generated-schema-single-parameter-schema-get--api-v3-departments-departmentId
+      x-accepts: application/json
+components:
+  parameters:
+    paging:
+      description: "{offset},{limit}. Defaults to 0,1000."
+      explode: true
+      in: query
+      name: paging
+      required: true
+      schema:
+        example: "100,0"
+        type: string
+        x-konfig-original-example: "100,0"
+        x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+      style: form
+  responses:
+    Error:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DepartmentsGetAll400Response'
+      description: Generique error message response
+      x-do-not-generate: true
+  schemas:
+    AxisSection:
+      allOf:
+      - $ref: '#/components/schemas/AxisSectionTreeless'
+      - $ref: '#/components/schemas/AxisSection_allOf'
+      description: "## Introduction\n\nIn some application contexts, resources can\
+        \ be attached to analytical items. In most cases, the goal is to answer the\
+        \ needs of cost accounting. Axes are primarily used by Timmi Timesheet & Cleemy\
+        \ Expenses.\n\nBoth in Timmi Timesheet and Cleemy Expense, users can enter\
+        \ their working hours or expenses spent on projects, tasks, work sites, cost\
+        \ centers, etc... These are the `AxisSection[]`, categorized in `Axis[]`.\
+        \ These axes can have parent-children relationships, and their axis-sections\
+        \ as well.\n\n![axis-section-diagram.png](https://stoplight.io/api/v1/projects/cHJqOjEwNjgxNg/images/y74HUrks5dQ)\n\
+        \n## Example\n\nLet's take an example. Say you expect your users to enter\
+        \ spent working hours on each project. Each project belongs to a single client,\
+        \ and is divided into tasks.\n\nIn other words:\n\n- Clients\n  - (1..n) Projects:\
+        \ each project belongs to one, and one only, client.\n    - (n..n) Tasks:\
+        \ each task belongs to one or more project(s). \n\nThen:\n- Each client is\
+        \ an `AxisSection` in the \"Clients\" `Axis`.\n- One client has zero or more\
+        \ projects, which are `AxisSection[]` in the \"Projects\" `Axis`. A project\
+        \ is child to one and only one client.\n- One project has zero or more tasks,\
+        \ which are `AxisSection[]` in the \"Tasks\" `Axis`. Each task axis-section\
+        \ is child to one or more project(s) axis-sections.\n\nThe JSON representation\
+        \ of these axes in the API would be:\n\n```json\n// GET /api/v3/axes HTTP/1.1\n\
+        {\n  \"data\": {\n    \"items\": [\n      {\n        \"id\": 1,\n        \"\
+        name\": \"Clients\",\n        \"parentAxisId\": null,\n        \"isNNRelation\"\
+        : false\n      },\n      {\n        \"id\": 2,\n        \"name\": \"Projects\"\
+        ,\n        \"parentAxisId\": 1,\n        \"isNNRelation\": false\n      },\n\
+        \      {\n        \"id\": 3,\n        \"name\": \"Tasks\",\n        \"parentAxisId\"\
+        : 2,\n        \"isNNRelation\": true\n      }\n    ]\n  }\n}\n```\n\nRegarding\
+        \ axis-sections:\n\n```json\n// GET /api/v3/axisSections HTTP/1.1\n{\n  \"\
+        data\": {\n    \"items\": [\n      {\n        \"id\": 1,\n        \"name\"\
+        : \"Acme Corporation\",\n        \"axis\": {\n          \"id\": 1,\n     \
+        \     \"name\": \"Clients\",\n          \"parentAxisId\": null,\n        \
+        \  \"isNNRelation\": false\n        },\n        \"parentAxisSections\": []\n\
+        \      },\n      {\n        \"id\": 2,\n        \"name\": \"My awesome project\"\
+        ,\n        \"axis\": {\n          \"id\": 2,\n          \"name\": \"Projects\"\
+        ,\n          \"parentAxisId\": 1,\n          \"isNNRelation\": false\n   \
+        \     },\n        \"parentAxisSections\": [\n          {\n            \"id\"\
+        : 1,\n            \"axisId\": 1\n          }\n        ]\n      },\n      {\n\
+        \        \"id\": 3,\n        \"name\": \"My #2 project\",\n        \"axis\"\
+        : {\n          \"id\": 2,\n          \"name\": \"Projects\",\n          \"\
+        parentAxisId\": 1,\n          \"isNNRelation\": false\n        },\n      \
+        \  \"parentAxisSections\": [\n          {\n            \"id\": 1,\n      \
+        \      \"axisId\": 1\n          }\n        ]\n      },\n      {\n        \"\
+        id\": 4,\n        \"name\": \"User tests\",\n        \"axis\": {\n       \
+        \   \"id\": 3,\n          \"name\": \"Tasks\",\n          \"parentAxisId\"\
+        : 2,\n          \"isNNRelation\": true\n        },\n        \"parentAxisSections\"\
+        : [\n          {\n            \"id\": 2,\n            \"axisId\": 2\n    \
+        \      },\n          {\n            \"id\": 3,\n            \"axisId\": 2\n\
+        \          }\n        ]\n      }\n    ]\n  }\n}\n```\n## Fields"
+      title: The Axis Section resource
+      type: object
+      x-tags:
+      - Axis-sections
+    Axis:
+      allOf:
+      - $ref: '#/components/schemas/AxisTreeless'
+      - $ref: '#/components/schemas/Axis_allOf'
+      description: "Read more about axes in the [definition for the axisSection resource](reference/Organization-v3.yaml/components/schemas/AxisSection)."
+      title: The Axis resource
+      x-tags:
+      - Axis-sections
+    Department:
+      description: |-
+        Departments, to which users must be attached, are used by the different Lucca solutions for different purposes:
+
+        * Define access scopes: for example to restrict the visibility of absences in the Timmi Absences schedule.
+        * Filtering data in a report: our different reports generally allow to filter data according to the legal entity, the SSC, but also the department of the user.
+        * Build the organization chart in Poplee Core HR.
+        The departments are represented as a hierarchical tree with a parent/child relationship.
+
+        *NB:* You can have up to 9 levels of departments, and up to 99 departments under a single parent department. However, limiting the number of levels to 7 is recommended.
+      example:
+        id: 2
+        name: Administration
+        code: Administration
+        hierarchy: /1.0/
+        parentId: /
+        position: 10000000000000000000
+        sortOrder: 1
+        level: 1
+        isActive: true
+        headID: null
+        head: null
+        users:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        currentUsers:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      properties:
+        id:
+          example: 2
+          readOnly: true
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-id
+        name:
+          example: Administration
+          maxLength: 255
+          type: string
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-name
+        code:
+          example: Administration
+          maxLength: 255
+          type: string
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-code
+        hierarchy:
+          description: Position of the departement in the hierarchical tree
+          example: /1.0/
+          type: string
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-hierarchy
+        parentId:
+          description: Position of the parent department in the hierarchical tree
+          example: /
+          pattern: "\\/[0-9]\\/"
+          type: string
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-parentId
+        isActive:
+          example: true
+          type: boolean
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-isActive
+        position:
+          description: Department's general position in the hierarchy
+          maximum: 100000000000000000000
+          minimum: 10000000000000000000
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-position
+        level:
+          description: level of the Department. Deduce from Position.
+          example: 1
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-level
+        sortOrder:
+          description: Order of the current Department among the children of the Parent
+            Department
+          example: 1
+          minimum: 1
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-sortOrder
+        headID:
+          description: ID of the User who is the head of the department
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department-properties-headID
+          example: null
+        head:
+          $ref: '#/components/schemas/User'
+        users:
+          description: "Users of the department, including inactive users."
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+        currentUsers:
+          description: Only active users of the department
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+        currentUsersCount:
+          description: Number of active users in the department
+          minimum: 0
+          readOnly: true
+          type: integer
+      required:
+      - code
+      - name
+      title: The Department resource
+      type: object
+      x-tags:
+      - Departments
+      x-examples:
+      - id: 2
+        name: Administration
+        code: Administration
+        hierarchy: /1.0/
+        parentId: /
+        position: 10000000000000000000
+        sortOrder: 1
+        level: 1
+        isActive: true
+        users:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        currentUsers:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      x-konfig-original-example:
+        id: 2
+        name: Administration
+        code: Administration
+        hierarchy: /1.0/
+        parentId: /
+        position: 10000000000000000000
+        sortOrder: 1
+        level: 1
+        isActive: true
+        users:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        currentUsers:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      x-konfig-generated-schema: konfig-generated-schema-components-schemas-Department
+    AxisSectionTreeless:
+      properties:
+        description: {}
+        id:
+          minimum: 1
+          type: integer
+        name:
+          readOnly: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        code:
+          type: string
+        multilingualName:
+          type: string
+        ownerId: {}
+        startOn:
+          format: date-time
+          readOnly: true
+        endOn:
+          format: date-time
+        active:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisSectionTreeless-properties-active
+        axisId:
+          type: integer
+      required:
+      - axisId
+      - code
+      - multilingualName
+      title: AxisSectionTreeless
+      type: object
+      x-stoplight:
+        id: kgwih8x8ajea8
+    AxisTreeless:
+      properties:
+        id:
+          format: int32
+          minimum: 0
+          readOnly: true
+          type: integer
+        name:
+          readOnly: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        multilingualName:
+          type: string
+        position:
+          default: 0
+          example: 0
+          format: int32
+          minimum: 0
+          type: integer
+          x-konfig-original-example: 0
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-position
+        parentAxisId:
+          default: null
+          format: int32
+          minimum: 0
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-parentAxisId
+          example: null
+        isActive:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-isActive
+        isReadOnly:
+          default: false
+          example: false
+          readOnly: true
+          type: boolean
+          x-konfig-original-example: false
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-isReadOnly
+        isNNRelation:
+          default: false
+          example: false
+          type: boolean
+          x-konfig-original-example: false
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-isNNRelation
+        level:
+          default: 0
+          example: 0
+          format: int32
+          readOnly: true
+          type: integer
+          x-konfig-original-example: 0
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisTreeless-properties-level
+      required:
+      - multilingualName
+      title: AxisTreeless
+      type: object
+      x-stoplight:
+        id: ptjr91y412040
+    DepartmentTreeNode:
+      example:
+        node:
+          name: name
+          id: 0
+          url: https://openapi-generator.tech
+        children:
+        - null
+        - null
+      properties:
+        node:
+          $ref: '#/components/schemas/DepartmentTreeNode_node'
+        children:
+          description: List of all children departments.
+          items:
+            $ref: '#/components/schemas/DepartmentTreeNode'
+          type: array
+      title: DepartmentTreeNode
+      type: object
+      x-stoplight:
+        id: trn3naznwv1de
+    User:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        url:
+          format: uri
+          type: string
+      title: User
+      type: object
+      x-stoplight:
+        id: 237yfq2tyul16
+    AxissectionsListResponse:
+      example:
+        data:
+          items:
+          - null
+          - null
+      properties:
+        data:
+          $ref: '#/components/schemas/AxissectionsListResponse_data'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    AxissectionsList200Response:
+      example:
+        data:
+          items: null
+      properties:
+        data:
+          $ref: '#/components/schemas/AxissectionsList200Response_data'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    AxissectionsCreateNewAxisSectionResponse:
+      example:
+        data: null
+      properties:
+        data:
+          $ref: '#/components/schemas/AxisSection'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    AxissectionsGetByIdResponse:
+      example:
+        data: null
+      properties:
+        data:
+          $ref: '#/components/schemas/AxisSection'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    AxissectionsUpdateByIdResponse:
+      example:
+        data: null
+      properties:
+        data:
+          $ref: '#/components/schemas/AxisSection'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    DepartmentsGetAllResponse:
+      example:
+        data:
+          items:
+          - id: 2
+            name: Administration
+            code: Administration
+            hierarchy: /1.0/
+            parentId: /
+            position: 10000000000000000000
+            sortOrder: 1
+            level: 1
+            isActive: true
+            headID: null
+            head: null
+            users:
+            - id: 11
+              name: Daniel Hernandez
+              url: https://sandbox.ilucca-demo.net/api/v3/users/11
+            - id: 36
+              name: henri paul
+              url: https://sandbox.ilucca-demo.net/api/v3/users/36
+            currentUsers:
+            - id: 11
+              name: Daniel Hernandez
+              url: https://sandbox.ilucca-demo.net/api/v3/users/11
+            - id: 36
+              name: henri paul
+              url: https://sandbox.ilucca-demo.net/api/v3/users/36
+            url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+          - id: 2
+            name: Administration
+            code: Administration
+            hierarchy: /1.0/
+            parentId: /
+            position: 10000000000000000000
+            sortOrder: 1
+            level: 1
+            isActive: true
+            headID: null
+            head: null
+            users:
+            - id: 11
+              name: Daniel Hernandez
+              url: https://sandbox.ilucca-demo.net/api/v3/users/11
+            - id: 36
+              name: henri paul
+              url: https://sandbox.ilucca-demo.net/api/v3/users/36
+            currentUsers:
+            - id: 11
+              name: Daniel Hernandez
+              url: https://sandbox.ilucca-demo.net/api/v3/users/11
+            - id: 36
+              name: henri paul
+              url: https://sandbox.ilucca-demo.net/api/v3/users/36
+            url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      properties:
+        data:
+          $ref: '#/components/schemas/DepartmentsGetAllResponse_data'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    DepartmentsGetAll400Response:
+      properties:
+        Status:
+          example: 404
+          type: integer
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DepartmentsGetAll400Response-properties-Status
+        Message:
+          example: Resource Department with ID 13651 not found
+          type: string
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-DepartmentsGetAll400Response-properties-Message
+      type: object
+      x-examples:
+        example-1:
+          Status: 404
+          Message: Resource Department with ID 13651 not found
+      x-konfig-is-used-in-non-successful-response: true
+      x-do-not-generate: true
+    DepartmentsListTreeResponse:
+      example:
+        data:
+          node: ""
+          children:
+          - node:
+              name: name
+              id: 0
+              url: https://openapi-generator.tech
+            children:
+            - null
+            - null
+          - node:
+              name: name
+              id: 0
+              url: https://openapi-generator.tech
+            children:
+            - null
+            - null
+      properties:
+        data:
+          $ref: '#/components/schemas/DepartmentsListTreeResponse_data'
+      type: object
+      x-examples:
+        example-1:
+          children:
+          - node:
+              id: 0
+              name: string
+              url: string
+            children:
+            - null
+      x-konfig-is-used-in-successful-response: true
+    DepartmentsGetByIdResponse:
+      example:
+        data:
+          id: 2
+          name: Administration
+          code: Administration
+          hierarchy: /1.0/
+          parentId: /
+          position: 10000000000000000000
+          sortOrder: 1
+          level: 1
+          isActive: true
+          headID: null
+          head: null
+          users:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          currentUsers:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      properties:
+        data:
+          $ref: '#/components/schemas/Department'
+      type: object
+      x-konfig-is-used-in-successful-response: true
+    konfig-generated-schema-paths--api-v3-axes-get-parameters-1-schema:
+      example: true
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-paths--api-v3-axisSections-get-parameters-3-schema:
+      example: true
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-parameters-paging-schema:
+      example: "100,0"
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department:
+      example:
+        id: 2
+        name: Administration
+        code: Administration
+        hierarchy: /1.0/
+        parentId: /
+        position: 10000000000000000000
+        sortOrder: 1
+        level: 1
+        isActive: true
+        headID: null
+        head: null
+        users:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        currentUsers:
+        - id: 11
+          name: Daniel Hernandez
+          url: https://sandbox.ilucca-demo.net/api/v3/users/11
+        - id: 36
+          name: henri paul
+          url: https://sandbox.ilucca-demo.net/api/v3/users/36
+        url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      properties:
+        id:
+          example: 2
+          type: number
+        name:
+          example: Administration
+          type: string
+        code:
+          example: Administration
+          type: string
+        hierarchy:
+          example: /1.0/
+          type: string
+        parentId:
+          example: /
+          type: string
+        position:
+          example: 10000000000000000000
+          type: number
+        sortOrder:
+          example: 1
+          type: number
+        level:
+          example: 1
+          type: number
+        isActive:
+          example: true
+          type: boolean
+        headID:
+          nullable: true
+          type: string
+          x-konfig-null-placeholder: true
+        head:
+          nullable: true
+          type: string
+          x-konfig-null-placeholder: true
+        users:
+          items:
+            properties:
+              id:
+                example: 11
+                type: number
+              name:
+                example: Daniel Hernandez
+                type: string
+              url:
+                example: https://sandbox.ilucca-demo.net/api/v3/users/11
+                type: string
+            type: object
+          type: array
+        currentUsers:
+          items:
+            properties:
+              id:
+                example: 11
+                type: number
+              name:
+                example: Daniel Hernandez
+                type: string
+              url:
+                example: https://sandbox.ilucca-demo.net/api/v3/users/11
+                type: string
+            type: object
+          type: array
+        url:
+          example: https://sandbox.ilucca-demo.net/api/v3/departments/2
+          type: string
+      type: object
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-id:
+      example: 2
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-name:
+      example: Administration
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-code:
+      example: Administration
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-hierarchy:
+      example: /1.0/
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-parentId:
+      example: /
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-isActive:
+      example: true
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-position:
+      example: 10000000000000000000
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-level:
+      example: 1
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-sortOrder:
+      example: 1
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-Department-properties-headID:
+      nullable: true
+      type: string
+      x-konfig-null-placeholder: true
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisSectionTreeless-properties-active:
+      example: true
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-position:
+      example: 0
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-parentAxisId:
+      nullable: true
+      type: string
+      x-konfig-null-placeholder: true
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-isActive:
+      example: true
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-isReadOnly:
+      example: false
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-isNNRelation:
+      example: false
+      type: boolean
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-AxisTreeless-properties-level:
+      example: 0
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DepartmentsGetAll400Response-properties-Status:
+      example: 404
+      type: number
+      x-do-not-generate: true
+    konfig-generated-schema-components-schemas-DepartmentsGetAll400Response-properties-Message:
+      example: Resource Department with ID 13651 not found
+      type: string
+      x-do-not-generate: true
+    konfig-generated-schema-single-parameter-schema-get--api-v3-axes:
+      properties:
+        id:
+          items:
+            type: integer
+          type: array
+        isActive:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-paths--api-v3-axes-get-parameters-1-schema
+        paging:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+      required:
+      - paging
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - id
+      - isActive
+      - paging
+    konfig-generated-schema-single-parameter-schema-get--api-v3-axisSections:
+      properties:
+        paging:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+        axisId:
+          items:
+            type: integer
+          type: array
+        ownerId:
+          items:
+            type: integer
+          type: array
+        active:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-paths--api-v3-axisSections-get-parameters-3-schema
+      required:
+      - paging
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - paging
+      - axisId
+      - ownerId
+      - active
+    konfig-generated-schema-single-parameter-schema-post--api-v3-axisSections:
+      properties:
+        description: {}
+        id:
+          minimum: 1
+          type: integer
+        name:
+          readOnly: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        code:
+          type: string
+        multilingualName:
+          type: string
+        ownerId: {}
+        startOn:
+          format: date-time
+          readOnly: true
+        endOn:
+          format: date-time
+        active:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisSectionTreeless-properties-active
+        axisId:
+          type: integer
+        parentAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+        childrenAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+      required:
+      - axisId
+      - code
+      - multilingualName
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-delete--api-v3-axisSections-axisSectionId:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--api-v3-axisSections-axisSectionId:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-put--api-v3-axisSections-axisSectionId:
+      properties:
+        description: {}
+        id:
+          minimum: 1
+          type: integer
+        name:
+          readOnly: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        code:
+          type: string
+        multilingualName:
+          type: string
+        ownerId: {}
+        startOn:
+          format: date-time
+          readOnly: true
+        endOn:
+          format: date-time
+        active:
+          default: true
+          example: true
+          type: boolean
+          x-konfig-original-example: true
+          x-konfig-generated-schema: konfig-generated-schema-components-schemas-AxisSectionTreeless-properties-active
+        axisId:
+          type: integer
+        parentAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+        childrenAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+      required:
+      - axisId
+      - code
+      - multilingualName
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--api-v3-departments:
+      properties:
+        headId:
+          type: integer
+        parentId:
+          type: integer
+        paging:
+          example: "100,0"
+          type: string
+          x-konfig-original-example: "100,0"
+          x-konfig-generated-schema: konfig-generated-schema-components-parameters-paging-schema
+      required:
+      - paging
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter:
+      - headId
+      - parentId
+      - paging
+    konfig-generated-schema-single-parameter-schema-get--api-v3-departments-tree:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    konfig-generated-schema-single-parameter-schema-get--api-v3-departments-departmentId:
+      properties: {}
+      type: object
+      x-do-not-generate: true
+      x-konfig-is-parameter: []
+    AxisSection_allOf:
+      properties:
+        parentAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+        childrenAxisSections:
+          items:
+            $ref: '#/components/schemas/AxisSectionTreeless'
+          type: array
+      example: null
+    Axis_allOf:
+      properties:
+        parentAxis:
+          $ref: '#/components/schemas/AxisTreeless'
+        childrenAxes:
+          items:
+            $ref: '#/components/schemas/AxisTreeless'
+          readOnly: true
+          type: array
+      type: object
+      example: null
+    DepartmentTreeNode_node:
+      example:
+        name: name
+        id: 0
+        url: https://openapi-generator.tech
+      properties:
+        id:
+          description: Department id
+          type: integer
+        name:
+          description: Department name
+          maxLength: 255
+          minLength: 1
+          type: string
+        url:
+          description: Department URL
+          format: uri
+          type: string
+      type: object
+    AxissectionsListResponse_data:
+      example:
+        items:
+        - null
+        - null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Axis'
+          type: array
+      type: object
+    AxissectionsList200Response_data:
+      example:
+        items: null
+      properties:
+        items:
+          $ref: '#/components/schemas/AxisSection'
+      type: object
+    DepartmentsGetAllResponse_data:
+      example:
+        items:
+        - id: 2
+          name: Administration
+          code: Administration
+          hierarchy: /1.0/
+          parentId: /
+          position: 10000000000000000000
+          sortOrder: 1
+          level: 1
+          isActive: true
+          headID: null
+          head: null
+          users:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          currentUsers:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+        - id: 2
+          name: Administration
+          code: Administration
+          hierarchy: /1.0/
+          parentId: /
+          position: 10000000000000000000
+          sortOrder: 1
+          level: 1
+          isActive: true
+          headID: null
+          head: null
+          users:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          currentUsers:
+          - id: 11
+            name: Daniel Hernandez
+            url: https://sandbox.ilucca-demo.net/api/v3/users/11
+          - id: 36
+            name: henri paul
+            url: https://sandbox.ilucca-demo.net/api/v3/users/36
+          url: https://sandbox.ilucca-demo.net/api/v3/departments/2
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Department'
+          type: array
+      type: object
+    DepartmentsListTreeResponse_data:
+      example:
+        node: ""
+        children:
+        - node:
+            name: name
+            id: 0
+            url: https://openapi-generator.tech
+          children:
+          - null
+          - null
+        - node:
+            name: name
+            id: 0
+            url: https://openapi-generator.tech
+          children:
+          - null
+          - null
+      properties:
+        node:
+          description: Root department. Always null.
+          type: "null"
+        children:
+          description: "Max depth: 9 levels"
+          items:
+            $ref: '#/components/schemas/DepartmentTreeNode'
+          type: array
+      type: object
+  securitySchemes:
+    Authorization:
+      description: "Header value must be equal to `lucca application={apiKey}`"
+      in: header
+      name: Authorization
+      type: apiKey
+      x-konfig-globally-required-security: true
+
